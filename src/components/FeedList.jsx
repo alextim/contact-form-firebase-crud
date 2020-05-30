@@ -15,7 +15,6 @@ const StyledTh = styled.th`
 const Heading = () => (
   <thead>
     <tr>
-      <StyledTh>ID</StyledTh>
       <StyledTh>Time</StyledTh>
       <StyledTh>IP</StyledTh>
       <StyledTh>Name</StyledTh>
@@ -28,13 +27,16 @@ const Heading = () => (
 
 const FeedListing = () => {
   const [feeds, setFeeds] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [addMode, setAddMode] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const db = new Db();
       const data = await db.getAll();
       setFeeds(data || []);
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -95,8 +97,9 @@ const FeedListing = () => {
 
   return (
     <>
-      {addMode && <NewFeedItem onSave={onAddNew} onCancel={() => setAddMode(false)} />}
-      {!addMode && (
+      {loading && <div>Loading...</div>}
+      {!loading && addMode && <NewFeedItem onSave={onAddNew} onCancel={() => setAddMode(false)} />}
+      {!loading && !addMode && (
         <>
           <button type="button" onClick={() => setAddMode(true)}>Add New</button>
           {feeds.length > 0 ? (

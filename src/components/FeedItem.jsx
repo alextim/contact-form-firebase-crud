@@ -9,7 +9,7 @@ const dateOptions = {
   day: 'numeric',
 };
 const StyledTr = styled.tr`
-  &:nth-child(even){background-color: #f2f2f2};
+  &:nth-of-type(even){background-color: #f2f2f2};
 `;
 
 const FeedItem = ({ feed, onDelete, onUpdate }) => {
@@ -57,7 +57,6 @@ const FeedItem = ({ feed, onDelete, onUpdate }) => {
   return (
     isEdit ? (
       <StyledTr>
-        <td>{id}</td>
         <td>{date}</td>
         <td>{ip}</td>
         <td><input name="name" defaultValue={feed.name} onChange={handleOnChange} /></td>
@@ -74,7 +73,6 @@ const FeedItem = ({ feed, onDelete, onUpdate }) => {
       </StyledTr>
     ) : (
       <StyledTr>
-        <td>{id}</td>
         <td>{date}</td>
         <td>{ip}</td>
         <td>{feed.name}</td>
